@@ -11,7 +11,7 @@ This text is likley to opinionated and narrow, if you have any thoughts then ple
 
 ## Introduction
 
-A common programming task is to compose a string of many strings and expressions. Say that I want to tel the users of my weather app what the temperature outside is in a nice personalised way. For instace: If the users name is `"Måns"` and the temperature outside in °C is `25`, then I'd like the final string to be `"Hey Måns, It's 25 °C outside."`. How to acomplish that?
+A common programming task is to compose a string of many strings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalised way. For instace: If the users name is `"Måns"` and the temperature outside in °C is `25`, then I'd like the final string to be `"Hey Måns, It's 25 °C outside."`. How to acomplish that?
 
 1. __String concatenation__
 ```elm
