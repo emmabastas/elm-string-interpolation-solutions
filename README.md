@@ -96,7 +96,28 @@ __TODO__
 __TODO__
 
 ### `String.replace`
-__TODO__
+
+Example:
+```elm
+"Hey ${name}, It's ${temperature} °C outside."
+    |> String.replace "${name}" "Mark"
+    |> String.replace "${temperature}" (String.fromInt 21)
+--> "Hey Mark, It's 21 °C outside."
+```
+
+Pros:
+* __Simple.__ Part of `elm-core`, easy to understand and use. One downside is that no particular placeholder syntax is enforced and depending on which languages you are used to, you might prefer different syntax. Python does it like `{name}`, bash like `$name` and so on. There's a risk of bikeshedding.
+* __Readable.__ Even with long multiline strings the structure remains clear.
+
+Cons:
+* __Type safety.__ Typos can result in bugs. Even more problematic, sometimes chaining `String.replace`'s can have unintended behavior:
+```elm
+"Hey ${name}, It's ${temperature} °C outside."
+    |> String.replace "${name}" "${temperature}"
+    |> String.replace "${temperature}" (String.fromInt 21)
+--> "Hey 21, It's 21 °C outside."
+```
+The user set their name to be `"${temperature}"` and that causes the string interpolation to produce this weird result. Depending on the usecase, this could be a major problem. Regardless it's something one has to constantly be aware of.
 
 ### [elm-string-format](https://package.elm-lang.org/packages/jorgengranseth/elm-string-format/latest/)
 __TODO__
