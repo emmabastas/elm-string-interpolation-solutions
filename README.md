@@ -1,17 +1,17 @@
-# Aproaches to string concatenation/interpolation [![Build Status](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions.svg?branch=master)](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions)
+# Approaches to string concatenation/interpolation [![Build Status](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions.svg?branch=master)](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions)
 
-This text is intended to be some sort of shared knowlegde about different approaches for doing string concatenation/interpolation in Elm, and list their pros and cons.
+This text is intended to be some sort of shared knowledge about different approaches for doing string concatenation/interpolation in Elm, and list their pros and cons.
 
-The text is devided into three parts:
+The text is divided into three parts:
 1. __Introduction__ explains string concatenation and interpolation
 2. __Factors to consider__ lists the factors that we care about when doing string concatenation/interpolation
-3. __Aproaches enumerated__ enumerates all the aproaches and their pros/cons
+3. __Approaches enumerated__ enumerates all the approaches and their pros/cons
 
-This text is likley to opinionated and narrow, if you have any thoughts then please share them! I think the Elm slack is the most appropriate, my handle there is `@emmabastas`.
+This text is likely to opinionated and narrow, if you have any thoughts then please share them! I think the Elm slack is the most appropriate, my handle there is `@emmabastas`.
 
 ## Introduction
 
-A common programming task is to compose a string of many strings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalised way. For instace: If the users name is `"Måns"` and the temperature outside in °C is `25`, then I'd like the final string to be `"Hey Måns, It's 25 °C outside."`. How to acomplish that?
+A common programming task is to compose a string of many strings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalized way. For instance: If the users name is `"Måns"` and the temperature outside in °C is `25`, then I'd like the final string to be `"Hey Måns, It's 25 °C outside."`. How to accomplish that?
 
 1. __String concatenation__
 ```elm
@@ -25,25 +25,25 @@ temperature = 25
 --> "Hey Måns, It's 25 °C outside."
 ```
 
-2. __String interpolation__. There isn't a built in way to do string interpolation in Elm. In javascript string interpolation would look like this:
+2. __String interpolation__. There isn't a built in way to do string interpolation in Elm. In JavaScript string interpolation would look like this:
 ```js
 `Hey ${userName}, It's ${temperature.toString()} °C outside.`
 // "Hey Måns, It's 25 °C outside."
 ```
 
-String interpolation is often considered more readable than string concatenation and is therefore often prefered. This becommes even more apparent with larger strings spanning multiple lines.
+String interpolation is often considered more readable than string concatenation and is therefore often preferred. This becomes even more apparent with larger strings spanning multiple lines.
 
 ## Factors to consider
 
 Before we can evaluate the pros and cons of different approaches we need to know which factors are important to us.
 
 We care about:
-* __Readabillity.__ Looking at the code should give us a feel for what the concatenated/interpolated string will look like. Looking at something like `"Hello ${firstName} ${lastName}!"` makes it clear that the final string could look something like `"Hello Laurie Anderson!"` or `"Hello Alvin Lucier!"`.
-* __Type safety.__ If something compiles it should work. But more generally the api/behaviour should be designed in a way that minimises the potential bugs, and gives a pleasant user experience.
-* __"Standardization"__. Idealy there would be one aproach which is _the_ approach. That approach should be easy to use and have no major flaws. I think that aproaches utilizing already existing functions in `elm/core` have this going for them.
+* __Readability.__ Looking at the code should give us a feel for what the concatenated/interpolated string will look like. Looking at something like `"Hello ${firstName} ${lastName}!"` makes it clear that the final string could look something like `"Hello Laurie Anderson!"` or `"Hello Alvin Lucier!"`.
+* __Type safety.__ If something compiles it should work. But more generally the API/behavior should be designed in a way that minimizes the potential bugs, and gives a pleasant user experience.
+* __"Standardization"__. Ideally there would be one approach which is _the_ approach. That approach should be easy to use and have no major flaws. I think that approaches utilizing already existing functions in `elm/core` have this going for them.
 
 We do __not__ care about:
-* __Performance.__ String interpolation/concatenation has never been a bottleneck for me nor have i heard of that being the case for others. We shouldn't solve problems that folks arent having! That said, if you have a usecase where performance is a concern that would be very valuable to hear about.
+* __Performance.__ String interpolation/concatenation has never been a bottleneck for me nor have i heard of that being the case for others. We shouldn't solve problems that folks aren't having! That said, if you have a use case where performance is a concern that would be very valuable to hear about.
 
 ## Approaches enumerated
 
