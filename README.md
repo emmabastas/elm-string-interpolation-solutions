@@ -120,7 +120,30 @@ Cons:
 The user set their name to be `"${temperature}"` and that causes the string interpolation to produce this weird result. Depending on the usecase, this could be a major problem. Regardless it's something one has to constantly be aware of.
 
 ### [elm-string-format](https://package.elm-lang.org/packages/jorgengranseth/elm-string-format/latest/)
-__TODO__
+
+Example:
+```elm
+import String.Format exposing (value, namedValue)
+
+-- positional placeholders
+"Hey {{ }}, it's {{ }} °C outside."
+    |> value "Mark"
+    |> value (String.fromInt 21)
+    --> "Hey Mark, it's 21 °C outside."
+
+-- named placeholders
+"Hey {{ name }}, it's {{ temperature }} °C outside."
+    |> namedValue "name" "Mark"
+    |> namedValue "temperature" (String.fromInt 21)
+    --> "Hey Mark, it's 21 °C outside."
+```
+
+Pros:
+* __Simple.__ Easy to understand and use. Enforces a particular placeholder syntax, expect that the placeholder names can be padded with any amount of spaces.
+* __Readable.__
+
+Cons:
+* __Type safety.__ `namedValue` has the same problems as `String.replace`.
 
 ### [elm-template](https://package.elm-lang.org/packages/lukewestby/elm-template/latest/)
 __TODO__
