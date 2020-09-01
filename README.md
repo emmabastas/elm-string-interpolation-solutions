@@ -63,6 +63,20 @@ __TODO__
 * Use multiline strings for multiline content.<br/>
 __TODO__
 
-#### [elm-string-interpolate](https://package.elm-lang.org/packages/lukewestby/elm-string-interpolate/latest/)
+### `String.join`
+__TODO__
 
-#### [elm-string-template](https://github.com/emmabastas/elm-string-template/blob/master/README.md)
+### `String.replace`
+__TODO__
+
+### [elm-string-format](https://package.elm-lang.org/packages/jorgengranseth/elm-string-format/latest/)
+__TODO__
+
+### [elm-template](https://package.elm-lang.org/packages/lukewestby/elm-template/latest/)
+__TODO__
+
+### [elm-string-interpolate](https://package.elm-lang.org/packages/lukewestby/elm-string-interpolate/latest/)
+__TODO__
+
+### [elm-string-template](https://github.com/emmabastas/elm-string-template/blob/master/README.md)
+__TODO__
