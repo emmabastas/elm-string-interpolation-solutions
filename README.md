@@ -1,62 +1,91 @@
-# Approaches to string concatenation/interpolation [![Build Status](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions.svg?branch=master)](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions)
+# Approaches to string concatenation/interpolation in Elm
+
+[![Build Status](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions.svg?branch=master)](https://travis-ci.org/emmabastas/elm-string-interpolation-solutions)
 
 This text is intended to be some sort of shared knowledge about different approaches for doing string concatenation/interpolation in Elm, and list their pros and cons.
-
-The text is divided into three parts:
-1. __Introduction__ explains string concatenation and interpolation
-2. __Factors to consider__ lists the factors that we care about when doing string concatenation/interpolation
-3. __Approaches enumerated__ enumerates all the approaches and their pros/cons
 
 This text is likely to opinionated and narrow, if you have any thoughts then please share them! I think the Elm slack is the most appropriate, my handle there is `@emmabastas`.
 
 ## Introduction
 
-A common programming task is to compose a string of many strings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalized way. For instance: If the users name is `"Måns"` and the temperature outside in °C is `25`, then I'd like the final string to be `"Hey Måns, It's 25 °C outside."`. How to accomplish that?
+A common programming task is to compose a string of many substrings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalized way. For instance: If the users name is `"Mark"` and the temperature outside in °C is `21`, then I'd like the final string to be `"Hey Mark, It's 21 °C outside."`. How do we accomplish that? There's many competing ways to do this in Elm, which is not desirable. In this text we look at the previous art, list what qualities we're looking for in an Elm solution and then evaluate the current approaches/solutions against this list.
 
-1. __String concatenation__
-```elm
-userName : String
-userName = "Måns"
+## Previous art
 
-temperature : Int
-temperature = 25
+There's so incredibly much previous art, it would be impossible to cover it all. The goal of this section is mostly to establish the core concepts and language when it comes to string concatenation/interpolation. If you're already familiar with C-style `printf`, positional and named placeholders and Rust's `format` macro then you can probably skip this section.
 
-"Hey " ++ userName ++ ", It's " ++ (String.fromInt temperature) ++ " °C outside."
---> "Hey Måns, It's 25 °C outside."
+### String concatenation
+
+__TODO__
+
+### String interpolation with a format string
+
+The most common form of this is C-style `printf` et al. which appears in a lot of languages today. It looks like this
+```c
+printf("Hey %s. It's %d °C outside.", "Mark", 21);
+// Hey Mark. It's 21 °C outside.
 ```
 
-2. __String interpolation__. There isn't a built in way to do string interpolation in Elm. In JavaScript string interpolation would look like this:
-```js
-`Hey ${userName}, It's ${temperature.toString()} °C outside.`
-// "Hey Måns, It's 25 °C outside."
+A _format string_ is passed to `printf`. The `%s` is a _format specifier_ and means "put a string here" and `%d` is the same but for a number. You can do even more fancy stuff with format specifiers, but that outside the scope of this text.
+
+Another example is Pythons `.format`. It can have _positional placeholders_
+```python
+'Hey {}, It\'s {} °C outside.'.format("Mark", 21)
+# 'Hey Mark, It's 21 °C outside.'
+```
+Or _named placeholders_
+```python
+'Hey {name}, It\'s {temperature} °C outside.'.format(name = 'Mark', temperature = 21)
+# 'Hey Mark, It's 21 °C outside.'
 ```
 
-String interpolation is often considered more readable than string concatenation and is therefore often preferred. This becomes even more apparent with larger strings spanning multiple lines.
+The biggest problem with this type of interpolation in the context of Elm is that it's not type safe. If I forget an argument or have a typo in a key the programs will either crash or produce garbled output. This python crashes:
+```python
+'Hi {name}!'.format(naem = 'Mark')
+#         typo here ^^^^
+```
 
-## Factors to consider
+### String interpolation with built in syntax
 
-Before we can evaluate the pros and cons of different approaches we need to know which factors are important to us.
+__TODO__
 
-We care about:
-* __Readability.__ Looking at the code should give us a feel for what the concatenated/interpolated string will look like. Looking at something like `"Hello ${firstName} ${lastName}!"` makes it clear that the final string could look something like `"Hello Laurie Anderson!"` or `"Hello Alvin Lucier!"`.
+### Rusts `format` macro - Statically analyzed format string
+
+In Rust you do string interpolation like this:
+```rust
+format!("Hey {name}, It's {temperature} °C outside.", name = "Mark", temperature = 21);
+// "Hey Mark, It's 21 °C outside."
+```
+This looks a lot like string interpolation with a format string. But it's actually evaluated statically and is type safe. If I have a typo in a placeholder I get a compilation error!
+
+## Important qualities / what to optimize for
+
+Defining what to optimize for is incredibly important. It's through that lens we view and judge all the approaches.
+
+Rust optimizes for type safety and zero cost abstractions, which led to the `format` macro to become the preferred way. Python optimizes for other things, leading to another solution that wouldn't make sense in rust, and vice-versa.
+
+In Elm, the solution should optimize for:
 * __Type safety.__ If something compiles it should work. But more generally the API/behavior should be designed in a way that minimizes the potential bugs, and gives a pleasant user experience.
-* __"Standardization"__. Ideally there would be one approach which is _the_ approach. That approach should be easy to use and have no major flaws. I think that approaches utilizing already existing functions in `elm/core` have this going for them.
+* __Simplicity__. Ideally there would be one approach which is _the_ approach. That approach should be easy to use and have no major flaws. If someone asks about string concatenation/interpolation, the response should be "use __x__", not "if __a__ then use __x__, else if __b__ then use __y__ ...". I think that approaches utilizing already existing functions in `elm/core` have this going for them.
+* __Readability.__ Looking at the code should give us a feel for what the concatenated/interpolated string will look like. Looking at something like `"Hello ${firstName} ${lastName}!"` makes it clear that the final string could look something like `"Hello Laurie Anderson!"` or `"Hello Alvin Lucier!"`.
 
-We do __not__ care about:
+We do __not__ optimize for:
 * __Performance.__ String interpolation/concatenation has never been a bottleneck for me nor have i heard of that being the case for others. We shouldn't solve problems that folks aren't having! That said, if you have a use case where performance is a concern that would be very valuable to hear about.
 
-## Approaches enumerated
+__NOTE:__ If you don't agree with this, or have some thoughts the please share them! It's important to get this right. Any and all feedback appreciated :heart:
+
+## Approaches evaluated
 
 ### Stick to `++`
 
 Pros:
-* __"Standardized".__ `++` is arguably the most obvious way to do concatenation, it's in `elm/core` and is one of the first things Elm developers learn about.
 * __Type safe.__
+* __Simple.__ `++` is arguably the most obvious way to do concatenation, it's in `elm/core` and is one of the first things Elm developers learn about.
 
 Cons:
-* __Readability.__ `++` is considered to be less readable than other alternatives. See __Introduction__ for examples.
+* __Readability.__ `++` is considered to be less readable than other alternatives.
 
-There are some techniques to make `++` more readable:
+There are however some techniques to make `++` more readable:
 * Bind expressions to variables and use the variables instead.<br/>
 __TODO__
 
