@@ -39,8 +39,8 @@ Before we can evaluate the pros and cons of different approaches we need to know
 
 We care about:
 * __Readabillity.__ Looking at the code should give us a feel for what the concatenated/interpolated string will look like. Looking at something like `"Hello ${firstName} ${lastName}!"` makes it clear that the final string could look something like `"Hello Laurie Anderson!"` or `"Hello Alvin Lucier!"`.
-* __Type safety.__
-If something compiles it should work. But more generally the api/behaviour should be designed in a way that minimises the potential bugs, and gives a pleasant user experience.
+* __Type safety.__ If something compiles it should work. But more generally the api/behaviour should be designed in a way that minimises the potential bugs, and gives a pleasant user experience.
+* __"Standardization"__. Idealy there would be one aproach which is _the_ approach. That approach should be easy to use and have no major flaws. I think that aproaches utilizing already existing functions in `elm/core` have this going for them.
 
 We do __not__ care about:
 * __Performance.__ String interpolation/concatenation has never been a bottleneck for me nor have i heard of that being the case for others. We shouldn't solve problems that folks arent having! That said, if you have a usecase where performance is a concern that would be very valuable to hear about.
