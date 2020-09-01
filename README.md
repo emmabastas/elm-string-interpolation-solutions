@@ -47,15 +47,21 @@ We do __not__ care about:
 
 ## Approaches enumerated
 
-#### Stick to concatenation
+### Stick to `++`
 
-#### `String.concat`
+Pros:
+* __"Standardized".__ `++` is arguably the most obvious way to do concatenation, it's in `elm/core` and is one of the first things Elm developers learn about.
+* __Type safe.__
 
-#### `String.replace`
+Cons:
+* __Readability.__ `++` is considered to be less readable than other alternatives. See __Introduction__ for examples.
 
-#### [elm-string-format](https://package.elm-lang.org/packages/jorgengranseth/elm-string-format/latest/)
+There are some techniques to make `++` more readable:
+* Bind expressions to variables and use the variables instead.<br/>
+__TODO__
 
-#### [elm-template](https://package.elm-lang.org/packages/lukewestby/elm-template/latest/)
+* Use multiline strings for multiline content.<br/>
+__TODO__
 
 #### [elm-string-interpolate](https://package.elm-lang.org/packages/lukewestby/elm-string-interpolate/latest/)
 
