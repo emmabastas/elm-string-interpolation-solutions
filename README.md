@@ -27,8 +27,8 @@ temperature = 25
 
 2. __String interpolation__. There isn't a built in way to do string interpolation in Elm. In javascript string interpolation would look like this:
 ```js
-`Hey ${userName}, It's ${temperature.toString()} °C outside`
---> "Hey Måns, It's 25 °C outside."
+`Hey ${userName}, It's ${temperature.toString()} °C outside.`
+// "Hey Måns, It's 25 °C outside."
 ```
 
 String interpolation is often considered more readable than string concatenation and is therefore often prefered. This becommes even more apparent with larger strings spanning multiple lines.
