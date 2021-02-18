@@ -4,11 +4,11 @@
 
 This text is intended to be some sort of shared knowledge about different approaches for doing string concatenation/interpolation in Elm, and list their pros and cons.
 
-This text is likely to opinionated and narrow, if you have any thoughts then please share them! I think the Elm slack is the most appropriate, my handle there is `@emmabastas`.
+The text is likely to opinionated and narrow, if you have any thoughts then please share them! I think the Elm slack is the most appropriate, my handle there is `@emmabastas`.
 
 ## Introduction
 
-A common programming task is to compose a string of many substrings and expressions. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalized way. For instance: If the users name is `"Mark"` and the temperature outside in °C is `21`, then I'd like the final string to be `"Hey Mark, It's 21 °C outside."`. How do we accomplish that? There's many competing ways to do this in Elm, which is not desirable. In this text we look at the previous art, list what qualities we're looking for in an Elm solution and then evaluate the current approaches/solutions against this list.
+A common programming task is to put dynamic data into static strings. Say that I want to tell the users of my weather app what the temperature outside is in a nice personalized way. For instance: If the users name is `"Mark"` and the temperature outside in °C is `21`, then I'd like the final string to be `"Hey Mark, It's 21 °C outside."`. How do we accomplish that? There's currently many ways to do this in Elm, which is not desirable. In this text we look at the previous art, list what qualities we're looking for in an Elm solution and then evaluate the current approaches/solutions against this list.
 
 ## Previous art
 
@@ -39,11 +39,7 @@ Or _named placeholders_
 # 'Hey Mark, It's 21 °C outside.'
 ```
 
-The biggest problem with this type of interpolation in the context of Elm is that it's not type safe. If I forget an argument or have a typo in a key the programs will either crash or produce garbled output. This python crashes:
-```python
-'Hi {name}!'.format(naem = 'Mark')
-#         typo here ^^^^
-```
+There's also a lot more advanced stuff that can be done with a format specifier, In C-style `%20d` will print a string padded with 20 spaces for example.
 
 ### String interpolation with built in syntax
 
@@ -71,6 +67,11 @@ In Elm, the solution should optimize for:
 
 We do __not__ optimize for:
 * __Performance.__ String interpolation/concatenation has never been a bottleneck for me nor have i heard of that being the case for others. We shouldn't solve problems that folks aren't having! That said, if you have a use case where performance is a concern that would be very valuable to hear about.
+
+From these vague guidelines we can also derive some more specific requirements:
+* __No fancy format specifiers in a format string.__ Having format specifiers like `%20s` for padding a string or `%d` for inserting a number is redundant in Elm. It's better to use Elm functions like `String.padLeft` or `String.fromInt` to achieve that.
+* __Only named placeholders.__ Named placeholders are less error-prone than unnamed ones. They're also more readable. **\*\*Examples\*\***
+
 
 __NOTE:__ If you don't agree with this, or have some thoughts the please share them! It's important to get this right. Any and all feedback appreciated :heart:
 
